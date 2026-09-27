@@ -12,6 +12,7 @@ Because serpents have relatively basic pathfinding, as mentioned above, it is po
 Templum Serpentis was created on a Mac, and has not yet been thoroughly tested on Windows or Linux. Pull requests adding full support (or issues confirming that the game works) for either platform are welcome!
 
 
+
 ### Controls
 Controls cannot be remapped, unless you are willing to edit and build the source. However, I've included what I think are reasonable defaults:  
 Up - W or up arrow  
@@ -23,6 +24,7 @@ Exit Maze - Space or Enter
 Using the mouse is also supported. If you click, the player will move one square in the direction of your pointer. If you click on the space you are currently standing on, you will exit through the door (if you are on the correct square and have a key, that is).
 
 Menu navigation can be done with either the mouse or the keyboard.
+
 
 
 ### Screenshots + Custom Mazes
@@ -39,6 +41,7 @@ With custom mazes (see [MAPFORMAT.md](/MAPFORMAT.md) for instructions on how to 
 
 Maps can, theoretically, go as large as your computer supports. (Or 32,767x32,767, whichever is smaller.)  
 Due to practical considerations such as not freezing the CPU, however, I recommend that maps stay below 100x100 (which is about where my computer tops out). If you have not loaded a file or chosen a different difficulty setting, the game defaults to a randomly generated 45x45 map.
+
 
 
 ### Building
@@ -77,6 +80,7 @@ Getting the outer edges of the window to look nice and even at all resolutions p
 Again, pull requests are welcome!
 
 
+
 ### Acknowledgements
 
 Templum Serpentis utilizes a few great open-source libraries:  
@@ -85,6 +89,7 @@ Templum Serpentis utilizes a few great open-source libraries:
 [Jersey 15](https://github.com/scfried/soft-type-jersey): Although not actually a code library, it's nice to have FOSS fonts.  
 [libnfd](https://github.com/btzy/nativefiledialog-extended): It's also pretty nice to be able to define your own custom mazes. NFD allowed me to worry about how to extract data from the maze file, instead of figuring out a good way to get the maze file's path from the user.  
 [SFML](https://github.com/sfml/sfml): And, of course, SFML! Without SFML drawing all the sprites, handling window initialization, sound playing, and so much more, this game couldn't exist at all. Big thanks to the maintainers of and contributors to that project.
+
 
 
 ### Licensing
