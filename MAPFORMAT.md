@@ -19,7 +19,7 @@ Lines 4-end — if you are providing a maze AND if token 3 of line 3 is 0, defin
 `D` — door  
 `P` — player
 
-A maze could look something like this.
+A custom maze could look something like this.
 ```
 ############
 #....###..D#
