@@ -46,7 +46,7 @@ Due to practical considerations such as not freezing the CPU, however, I recomme
 
 ### Building
 
-To build the program, run these commands:
+Assuming you have cmake installed and a valid C++ compiler defined, you can build Templum Serpentis on MacOS or Windows with these commands. If you use Linux, more steps may be required.
 ```
 cmake -B build
 cmake --build build
