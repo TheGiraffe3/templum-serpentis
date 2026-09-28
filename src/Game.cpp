@@ -395,8 +395,6 @@ void Game::shutDownGame()
 	groundTextures.clear();
 	wallTextures.clear();
 	specialTextures.clear();
-
-	// std::cout << "Shutting down." << std::endl;
 }
 
 void Game::addAutoGenMazeToTiles()

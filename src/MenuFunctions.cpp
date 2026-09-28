@@ -19,9 +19,6 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #include "GlobalData.h"
 #include "MenuFunctions.h"
 #include "ResourcePath.hpp"
-#include <iostream>
-
-
 
 // local functions
 void handleCenteringText(sf::Text& text, sf::FloatRect& textBounds, int location, int uiPadding, float halfWindowX, float halfWindowY)
