@@ -24,7 +24,6 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #include "ResourcePath.hpp"
 
 // We define a custom function here because we have five clickable buttons.
-// TODO: integrate into MenuFunctions somehow?
 void ShowGameStartMenuMovePointer(MenuData& data, int selectedButton, sf::FloatRect& text0Bounds, sf::FloatRect& text4Bounds) {
 	if (selectedButton == 0) {
 		data.pointer.setPosition({
