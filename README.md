@@ -96,10 +96,10 @@ Templum Serpentis utilizes a few great open-source libraries:
 
 Source files are licensed under GPLv3 Copyright © 2026 TheGiraffe3.  
 All PNG, ICNS/ICO, and MD files are under the CC-BY-SA-4.0 license Copyright © 2026 TheGiraffe3.  
-data/TemplumSerpentis.wav is under CC-BY-NC-4.0 Copyright © 2026 TheGiraffe3.  
-data/font.ttf is under the SIL OPEN FONT license Copyright 2023 The Soft Type Project Authors.  
-include/mazegen.hpp is under the MIT license Copyright © 2023 Aleksandr Bazhin.  
-include/Candle/* is under the MIT license Copyright © 2020 Miguel Mejía Jiménez.  
-include/NFD/* is under the ZLib license Copyright © Bernard Teo.
+`data/TemplumSerpentis.wav` is under CC-BY-NC-4.0 Copyright © 2026 TheGiraffe3.  
+`data/font.ttf` is under the SIL OPEN FONT license Copyright 2023 The Soft Type Project Authors.  
+`include/mazegen.hpp` is under the MIT license Copyright © 2023 Aleksandr Bazhin.  
+`include/Candle/*` is under the MIT license Copyright © 2020 Miguel Mejía Jiménez.  
+`include/NFD/*` is under the ZLib license Copyright © Bernard Teo.
 
 For the full text of each license above, please see the [OTHERLICENSES.txt](/OTHERLICENSES.txt) file.
