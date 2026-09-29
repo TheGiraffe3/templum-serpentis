@@ -22,18 +22,17 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #include "GlobalData.h"
 #include "MenuFunctions.h"
 
-// TODO add more messages and make ones that work well
 std::string getRandomVictoryMessage()
 {
 	const std::vector<std::string> victoryMessages = {
 		"Nice job making it through the door!",
-		// "Nice job making it through the door!",
-		// "Nice job making it through the door!",
-		// "Can I buy all your gold?",
-		// "Per ianuam pervenisti!",
-		// "Per labyrinthum reptasti!",
-		// "Aurum tuum volo!",
-		// "How much does a pile of gold cost?"
+		"Nice job making it through the door!",
+		"Nice job making it through the door!",
+		"You made it through the door!",
+		"Awesome!",
+		"Nice!",
+		"Gold may be disposed of at the nearest retailer.",
+		"Per labyrinthum reptasti! Awesomo!",
 	};
 	int number = getRandomNumber(0, victoryMessages.size() - 1);
 	return victoryMessages[number];
@@ -43,8 +42,11 @@ std::string getRandomDefeatMessage()
 {
 	const std::vector<std::string> defeatMessages = {
 		"Avoid the serpents next time!",
-		// "Next time, avoid the serpents!",
-		// "Serpentes vitare!"
+		"Avoid the serpents next time!",
+		"Avoid the serpents next time!",
+		"Close!",
+		"Serpentes vitare! Oopsum!",
+		"Almost there! Better luck next time!",
 	};
 	int number = getRandomNumber(0, defeatMessages.size() - 1);
 	return defeatMessages[number];
