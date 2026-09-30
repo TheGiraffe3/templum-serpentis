@@ -24,7 +24,7 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #include <windows.h>
 #endif
 
-// TODO: complete Windows and Linux support
+// TODO: Linux support
 
 inline std::string getResourcesPath() {
 #ifdef __APPLE__

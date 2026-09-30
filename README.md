@@ -9,7 +9,7 @@ If you find a bug or unexpected behavior, don't hesitate to open an issue or pul
 To win a game, find the key and get to the door. If you find a flashlight, you will be able to see further. Gold can be picked up at random spots in the maze, but it doesn't do anything (but can you find every piece of gold before escaping?) If you run into a serpent, you lose - unless you have a machete, in which case the serpent dies.  
 Because serpents have relatively basic pathfinding, as mentioned above, it is possible to lure them out of narrow passageways so that you can sneak past. And because of how collisions are handled, you can kill multiple serpents with the same machete. Have fun figuring out how!
 
-Templum Serpentis was created on a Mac, and has not yet been thoroughly tested on Windows or Linux. Pull requests adding full support for (or issues confirming that the game works on) either platform are welcome!
+Templum Serpentis was created on a Mac, has been tested on Windows, but has not been built on Linux. Pull requests adding support for Linux are welcome!
 
 
 
