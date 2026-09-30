@@ -6,32 +6,33 @@ on:
       platform:
         required: true
         description: "Platform To Build On"
-        default: "MacOS"
+        default: "Both"
         type: choice
         options:
+          - Both
           - MacOS
           - Windows
 
 jobs:
   build-macos:
     name: MacOS
-    if: ${{ inputs.platform == 'MacOS' }}
+    if: ${{ inputs.platform == 'MacOS' || inputs.platform == 'Both' }}
     runs-on: macos-15
     steps:
     - uses: actions/checkout@v7
-    - name: Build application
+    - name: Build
       run: |
         cmake -B build
         cmake --build build
-    - name: Upload application
+    - name: Upload .app
       uses: actions/upload-artifact@v7
       with:
-        name: "Templum Serpentis.app"
-        path: ~/build/
+        name: "Templum Serpentis"
+        path: "~/build/Templum Serpentis.app"
 
   build-windows:
     name: Windows
-    if: ${{ inputs.platform == 'Windows' }}
+    if: ${{ inputs.platform == 'Windows' || inputs.platform == 'Both' }}
     runs-on: windows-2025
     steps:
     - uses: actions/checkout@v7
@@ -39,9 +40,8 @@ jobs:
       run: |
         cmake -B build
         cmake --build build --config Release
-        echo "ls build"
-        ls build
-        echo "ls build/Release"
-        ls build/Release
-        echo "ls build/Debug"
-        ls build/Debug
+    - name: Upload .exe
+      uses: actions/upload-artifact@v7
+      with:
+        name: "Templum Serpentis"
+        path: "./build/Release/Templum Serpentis.exe"
