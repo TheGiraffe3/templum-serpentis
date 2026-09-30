@@ -1,0 +1,56 @@
+name: Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        required: true
+        description: "Platform To Build On"
+        default: "Both"
+        type: choice
+        options:
+          - Both
+          - MacOS
+          - Windows
+
+jobs:
+  build-macos:
+    name: MacOS
+    if: ${{ inputs.platform == 'MacOS' || inputs.platform == 'Both' }}
+    runs-on: macos-15
+    steps:
+    - uses: actions/checkout@v7
+    - name: Build
+      run: |
+        cmake -B build "-DCMAKE_OSX_ARCHITECTURES=x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15
+        cmake --build build
+    - name: Zip .app
+      run: |
+        cd build
+        zip -r "../Templum Serpentis.zip" "Templum Serpentis.app"
+    - name: Upload .zip
+      uses: actions/upload-artifact@v7
+      with:
+        name: "Templum Serpentis.app.zip"
+        path: "./Templum Serpentis.zip"
+
+  build-windows:
+    name: Windows
+    if: ${{ inputs.platform == 'Windows' || inputs.platform == 'Both' }}
+    runs-on: windows-2025
+    steps:
+    - uses: actions/checkout@v7
+    - name: Build application
+      run: |
+        cmake -B build
+        cmake --build build --config Release
+    - name: Zip application and data files together
+      run: |
+        mkdir "Templum Serpentis"
+        mv build/Release/TemplumSerpentis.exe "Templum Serpentis"
+        mv data "Templum Serpentis"
+    - name: Upload .exe
+      uses: actions/upload-artifact@v7
+      with:
+        name: "Templum Serpentis.zip"
+        path: "./Templum Serpentis"
