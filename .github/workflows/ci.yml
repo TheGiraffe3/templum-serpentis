@@ -1,7 +1,6 @@
 name: Build
 
 on:
-  push:
   workflow_dispatch:
     inputs:
       platform:
@@ -16,6 +15,7 @@ on:
 jobs:
   build-macos:
     name: MacOS
+    if: ${{ inputs.platform == 'MacOS' }}
     runs-on: macos-15
     steps:
     - uses: actions/checkout@v7
@@ -23,18 +23,25 @@ jobs:
       run: |
         cmake -B build
         cmake --build build
-        ls && ls build
+    - name: Upload application
+      uses: actions/upload-artifact@v7
+      with:
+        name: "Templum Serpentis.app"
+        path: ~/build/
 
   build-windows:
     name: Windows
+    if: ${{ inputs.platform == 'Windows' }}
     runs-on: windows-2025
     steps:
     - uses: actions/checkout@v7
     - name: Build application
       run: |
         cmake -B build
-        cmake --build build
-        ls && ls build
-
-#    if: ${{ inputs.platform == 'macos' }}
-#    if: ${{ inputs.platform == 'windows' }}
+        cmake --build build --config Release
+        echo "ls build"
+        ls build
+        echo "ls build/Release"
+        ls build/Release
+        echo "ls build/Debug"
+        ls build/Debug
