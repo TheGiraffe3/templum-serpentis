@@ -52,5 +52,5 @@ jobs:
     - name: Upload .exe
       uses: actions/upload-artifact@v7
       with:
-        name: "Templum Serpentis.exe.zip"
+        name: "Templum Serpentis.zip"
         path: "./Templum Serpentis"
