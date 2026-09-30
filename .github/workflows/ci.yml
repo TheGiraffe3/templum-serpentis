@@ -24,11 +24,19 @@ jobs:
       run: |
         cmake -B build
         cmake --build build
+    - name: Debugging
+      run: |
+        echo "ls"
+        ls
+        echo "ls build"
+        ls build
+        echo "pwd"
+        pwd
     - name: Upload .app
       uses: actions/upload-artifact@v7
       with:
         name: "Templum Serpentis"
-        path: "~/build/Templum Serpentis.app"
+        path: "./build/Templum Serpentis.app"
 
   build-windows:
     name: Windows
@@ -40,6 +48,16 @@ jobs:
       run: |
         cmake -B build
         cmake --build build --config Release
+    - name: Debugging
+      run: |
+        echo "ls"
+        ls
+        echo "ls build"
+        ls build
+        echo "ls build/Release"
+        ls build/Release
+        echo "pwd"
+        pwd
     - name: Upload .exe
       uses: actions/upload-artifact@v7
       with:
