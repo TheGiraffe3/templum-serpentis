@@ -395,8 +395,6 @@ void Game::shutDownGame()
 	groundTextures.clear();
 	wallTextures.clear();
 	specialTextures.clear();
-
-	// std::cout << "Shutting down." << std::endl;
 }
 
 void Game::addAutoGenMazeToTiles()
@@ -628,11 +626,10 @@ int Game::InitializeAndRunGame(GlobalData& globalData, GameCfg::Config& gameConf
 	// Start the game loop
 	while (globalData.window.isOpen())
 	{
-		// Setting this every frame may not be ideal, but we need to make
-		// sure there aren't several tiles marked as player-occupied.
-		int playerPreviousX = config.playerX;
-		int playerPreviousY = config.playerY;
 		keyPressedThisFrame = false;
+
+		// Reset current player position to be marked as ground.
+		config.tiles[config.playerX][config.playerY] = 0;
 
 		while (const std::optional event = globalData.window.pollEvent())
 		{
@@ -841,11 +838,7 @@ int Game::InitializeAndRunGame(GlobalData& globalData, GameCfg::Config& gameConf
 		if (std::abs(targetCenter.x - newCenter.x) < 0.1f && std::abs(targetCenter.y - newCenter.y) < 0.1f)	 newCenter = targetCenter;
 		camera.setCenter(newCenter);
 
-		// Put the previous player position back to ground, then mark
-		// their current position as player-occupied. Potentially a
-		// bit inefficient to run every loop.
-		// TODO: move into keyPressedThisFrame conditional?
-		config.tiles[playerPreviousX][playerPreviousY] = 0;
+		// Mark the player's current position as player-occupied.
 		config.tiles[config.playerX][config.playerY] = 2;
 
 		// Candle stuff

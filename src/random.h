@@ -16,7 +16,6 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <random>
-#include <iostream>
 
 // returns a random number between and inclusive of min, max
 int getRandomNumber(int min, int max) {
