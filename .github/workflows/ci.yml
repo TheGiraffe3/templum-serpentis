@@ -1,31 +1,37 @@
-name: CI
+name: Build
 
 on:
-  push:
-  pull_request:
+  workflow_dispatch:
+    inputs:
+      platform:
+        required: true
+        description: "Platform To Build On"
+        default: "MacOS"
+        type: choice
+        options:
+          - MacOS
+          - Windows
 
 jobs:
   build-macos:
-    runs-on: macos-latest
+    name: MacOS
+    if: ${{ inputs.platform == 'macos' }}
+    runs-on: macos-15
     steps:
     - uses: actions/checkout@v7
     - name: Build application
       run: |
         cmake -B build
         cmake --build build
+        ls && ls build
   build-windows:
-    runs-on: windows-latest
+    name: Windows
+    if: ${{ inputs.platform == 'macos' }}
+    runs-on: windows-2025
     steps:
     - uses: actions/checkout@v7
     - name: Build application
       run: |
         cmake -B build
         cmake --build build
-  build-linux:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v7
-    - name: Build application
-      run: |
-        cmake -B build
-        cmake --build build
+        ls && ls build
