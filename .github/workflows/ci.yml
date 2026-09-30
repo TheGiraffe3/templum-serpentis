@@ -1,6 +1,7 @@
 name: Build
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       platform:
@@ -15,7 +16,6 @@ on:
 jobs:
   build-macos:
     name: MacOS
-    if: ${{ inputs.platform == 'macos' }}
     runs-on: macos-15
     steps:
     - uses: actions/checkout@v7
@@ -24,9 +24,9 @@ jobs:
         cmake -B build
         cmake --build build
         ls && ls build
+
   build-windows:
     name: Windows
-    if: ${{ inputs.platform == 'macos' }}
     runs-on: windows-2025
     steps:
     - uses: actions/checkout@v7
@@ -35,3 +35,6 @@ jobs:
         cmake -B build
         cmake --build build
         ls && ls build
+
+#    if: ${{ inputs.platform == 'macos' }}
+#    if: ${{ inputs.platform == 'windows' }}
