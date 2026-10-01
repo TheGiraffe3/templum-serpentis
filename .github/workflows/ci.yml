@@ -12,6 +12,8 @@ on:
           - Both
           - MacOS
           - Windows
+          - Windows-x64
+          - Windows-x86
 
 jobs:
   build-macos:
@@ -36,7 +38,7 @@ jobs:
 
   build-windows-x64:
     name: Windows x64
-    if: ${{ inputs.platform == 'Windows' || inputs.platform == 'Both' }}
+    if: ${{ inputs.platform == 'Windows' || inputs.platform == 'Windows-x64' || inputs.platform == 'Both' }}
     runs-on: windows-2025
     steps:
     - uses: actions/checkout@v7
@@ -58,7 +60,7 @@ jobs:
 
   build-windows-x86:
     name: Windows x86
-    if: ${{ inputs.platform == 'Windows' || inputs.platform == 'Both' }}
+    if: ${{ inputs.platform == 'Windows' || inputs.platform == 'Windows-x86' || inputs.platform == 'Both' }}
     runs-on: windows-2025
     steps:
     - uses: actions/checkout@v7
