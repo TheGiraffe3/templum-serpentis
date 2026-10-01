@@ -11,8 +11,8 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 FetchContent_Declare(candle
-	GIT_REPOSITORY https://github.com/MiguelMJ/Candle.git
-	GIT_TAG master
+	GIT_REPOSITORY https://github.com/TheGiraffe3/Candle.git
+	GIT_TAG include-algorithm
 	GIT_SHALLOW ON
 	EXCLUDE_FROM_ALL
 	SYSTEM)
