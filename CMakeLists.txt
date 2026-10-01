@@ -98,8 +98,8 @@ endif()
 
 if(MINGW AND WIN32)
 	foreach(FILE_PATH ${MINGW_RUNTIME})
-		add_custom_command(TARGET EndlessSky POST_BUILD
-			COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${FILE_PATH}" "$<TARGET_FILE_DIR:EndlessSky>"
+		add_custom_command(TARGET TemplumSerpentis POST_BUILD
+			COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${FILE_PATH}" "$<TARGET_FILE_DIR:TemplumSerpentis>"
 			COMMAND_EXPAND_LISTS VERBATIM)
 
 		# Add an install rule for this DLLs, so that it is also included when installing.
