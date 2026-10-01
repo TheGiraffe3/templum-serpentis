@@ -42,15 +42,15 @@ jobs:
     - uses: actions/checkout@v7
     - name: Build application
       run: |
-        cmake -B build -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -DCMAKE_RC_COMPILER=windres
+        cmake -G "MinGW Makefiles" -B build -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -DCMAKE_RC_COMPILER=windres
         cmake --build build --config Release
     - name: Zip application and data files together
       run: |
         mkdir "Templum Serpentis"
         mv build/Release/TemplumSerpentis.exe "Templum Serpentis"
         mv data "Templum Serpentis"
-        ls
         ls build
+        echo "build/Release"
         ls build/Release
     - name: Upload .exe
       uses: actions/upload-artifact@v7
