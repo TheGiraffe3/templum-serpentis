@@ -11,7 +11,7 @@ Because serpents have relatively basic pathfinding, as mentioned above, it is po
 
 You can find the project's itch.io page [here](https://thegiraffe3.itch.io/templum-serpentis).
 
-Templum Serpentis was created on a Mac, has been tested on Windows, but has not been built on Linux. Pull requests adding support for Linux are welcome!
+Templum Serpentis was created on a Mac and has been tested on Windows 11, but has not been built on Linux or Windows versions below Windows 10. Pull requests adding support for Linux are welcome!
 
 
 
