@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.23)
 project(TemplumSerpentis LANGUAGES CXX)
 
+# Download and build dependencies.
 include(FetchContent)
+
 FetchContent_Declare(SFML
 	GIT_REPOSITORY https://github.com/SFML/SFML.git
 	GIT_TAG 3.0.2
@@ -36,9 +38,11 @@ FetchContent_MakeAvailable(nfd-e)
 set(CMAKE_CXX_STANDARD 17)
 
 if(APPLE)
+	# Set certain files that we don't need in the built data folder.
 	set(APP_ICON_MACOSX ${CMAKE_CURRENT_SOURCE_DIR}/data/TemplumSerpentis.icns)
 	set(APP_ICON_WINDOWS ${CMAKE_CURRENT_SOURCE_DIR}/data/TemplumSerpentis.ico)
 	set(APP_ICON_WINDOWS_2 ${CMAKE_CURRENT_SOURCE_DIR}/data/window-icon.png)
+
 	set_source_files_properties(${APP_ICON_MACOSX}
 		PROPERTIES MACOSX_PACKAGE_LOCATION "Resources"
 	)
@@ -61,11 +65,14 @@ if(APPLE)
 		target_sources(TemplumSerpentis PRIVATE "${RESOURCES}")
 
 		foreach(FILE ${RESOURCES})
+			# Don't copy if we don't need them.
 			if(FILE STREQUAL APP_ICON_MACOSX OR FILE STREQUAL APP_ICON_WINDOWS OR FILE STREQUAL APP_ICON_WINDOWS_2)
 				continue()
 			endif()
+
 			# Get the relative path from the root folder to the current file.
 			file(RELATIVE_PATH NEW_FILE "${CMAKE_CURRENT_SOURCE_DIR}" "${FILE}")
+
 			# Get the parent directory for the new location.
 			get_filename_component(FILE_PATH "${NEW_FILE}" DIRECTORY)
 
@@ -74,6 +81,7 @@ if(APPLE)
 		endforeach()
 	endforeach()
 elseif(WIN32)
+	# WIN32 flag means that we are a GUI application and don't require terminal.
 	add_executable(TemplumSerpentis WIN32 src/windows_resources.rc)
 else()
 	add_executable(TemplumSerpentis)
@@ -83,12 +91,14 @@ target_include_directories(TemplumSerpentis PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
+# Candle automatically links sfml-graphics and sfml-window, so we don't need to explicitly link those here.
 target_link_libraries(TemplumSerpentis PUBLIC
 	sfml-audio
 	Candle-s
 	nfd
 )
 
+# Link items that NFD requires.
 if(APPLE)
 	find_library(APPKIT_LIBRARY AppKit REQUIRED)
 	find_library(UTI_LIBRARY UniformTypeIdentifiers REQUIRED)
