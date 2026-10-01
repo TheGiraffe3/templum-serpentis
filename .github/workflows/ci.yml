@@ -34,8 +34,8 @@ jobs:
         name: "Templum Serpentis.app.zip"
         path: "./Templum Serpentis.zip"
 
-  build-windows:
-    name: Windows x64_64
+  build-windows-x64:
+    name: Windows x64
     if: ${{ inputs.platform == 'Windows' || inputs.platform == 'Both' }}
     runs-on: windows-2025
     steps:
@@ -53,5 +53,27 @@ jobs:
     - name: Upload .exe
       uses: actions/upload-artifact@v7
       with:
-        name: "Templum Serpentis.zip"
+        name: "Templum Serpentis-x64.zip"
+        path: "./Templum Serpentis"
+
+  build-windows-x86:
+    name: Windows x86
+    if: ${{ inputs.platform == 'Windows' || inputs.platform == 'Both' }}
+    runs-on: windows-2025
+    steps:
+    - uses: actions/checkout@v7
+    - name: Build application
+      run: |
+        cmake -G "MinGW Makefiles" -B build -DCMAKE_CXX_COMPILER=i686-w64-mingw32-g++ -DCMAKE_RC_COMPILER=windres
+        cmake --build build --config Release
+    - name: Zip application and data files together
+      run: |
+        mkdir "Templum Serpentis"
+        mv build/TemplumSerpentis.exe "Templum Serpentis"
+        mv build/lib* "Templum Serpentis"
+        mv data "Templum Serpentis"
+    - name: Upload .exe
+      uses: actions/upload-artifact@v7
+      with:
+        name: "Templum Serpentis-x86.zip"
         path: "./Templum Serpentis"
