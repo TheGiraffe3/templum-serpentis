@@ -35,14 +35,14 @@ jobs:
         path: "./Templum Serpentis.zip"
 
   build-windows:
-    name: Windows
+    name: Windows x64
     if: ${{ inputs.platform == 'Windows' || inputs.platform == 'Both' }}
     runs-on: windows-2025
     steps:
     - uses: actions/checkout@v7
     - name: Build application
       run: |
-        cmake -B build
+        cmake -B build -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++
         cmake --build build --config Release
     - name: Zip application and data files together
       run: |
