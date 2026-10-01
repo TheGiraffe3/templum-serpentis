@@ -35,6 +35,22 @@ FetchContent_MakeAvailable(nfd-e)
 
 set(CMAKE_CXX_STANDARD 17)
 
+if(MINGW AND WIN32)
+	# Copy the MinGW runtime DLLs to the output folder as well, to avoid the
+	# situation where a user has other MinGW runtime DLLs than the one used to compile.
+	get_filename_component(PARENT_DIR "${CMAKE_CXX_COMPILER}" DIRECTORY)
+	get_filename_component(MINGW_RUNTIME_DIR "${PARENT_DIR}" DIRECTORY)
+
+	# This only works on 64-bit Windows since MinGW doesn't have seh exceptions
+	# support for 32-bit Windows. TODO change.
+	foreach(lib "stdc++-6" "winpthread-1" "gcc_s_seh-1")
+		file(GLOB_RECURSE FILE_PATH "${MINGW_RUNTIME_DIR}/lib${lib}.dll")
+		if(FILE_PATH)
+			list(APPEND MINGW_RUNTIME "${FILE_PATH}")
+		endif()
+	endforeach()
+endif()
+
 if(APPLE)
 	set(APP_ICON_MACOSX ${CMAKE_CURRENT_SOURCE_DIR}/data/TemplumSerpentis.icns)
 	set(APP_ICON_WINDOWS ${CMAKE_CURRENT_SOURCE_DIR}/data/TemplumSerpentis.ico)
@@ -78,6 +94,17 @@ elseif(WIN32)
 	target_link_libraries(TemplumSerpentis PUBLIC sfml-main)
 else()
 	add_executable(TemplumSerpentis)
+endif()
+
+if(MINGW AND WIN32)
+	foreach(FILE_PATH ${MINGW_RUNTIME})
+		add_custom_command(TARGET EndlessSky POST_BUILD
+			COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${FILE_PATH}" "$<TARGET_FILE_DIR:EndlessSky>"
+			COMMAND_EXPAND_LISTS VERBATIM)
+
+		# Add an install rule for this DLLs, so that it is also included when installing.
+		install(FILES ${FILE_PATH} DESTINATION .)
+	endforeach()
 endif()
 
 target_include_directories(TemplumSerpentis PRIVATE
