@@ -64,6 +64,9 @@ jobs:
     runs-on: windows-2025
     steps:
     - uses: actions/checkout@v7
+    - name: Add MinGW to PATH
+      run: |
+        echo (Join-Path C: mingw32 bin) >> $env:GITHUB_PATH
     - name: Build application
       run: |
         cmake -G "MinGW Makefiles" -B build -DCMAKE_CXX_COMPILER=i686-w64-mingw32-g++ -DCMAKE_RC_COMPILER=windres
