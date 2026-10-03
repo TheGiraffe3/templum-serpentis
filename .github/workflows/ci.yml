@@ -12,6 +12,8 @@ on:
           - Both
           - MacOS
           - Windows
+          - Windows-x64
+          - Windows-x86
 
 jobs:
   build-macos:
@@ -34,23 +36,49 @@ jobs:
         path: "./Templum Serpentis.zip"
         archive: false
 
-  build-windows:
-    name: Windows
-    if: ${{ inputs.platform == 'Windows' || inputs.platform == 'Both' }}
+  build-windows-x64:
+    name: Windows x64
+    if: ${{ inputs.platform == 'Windows' || inputs.platform == 'Windows-x64' || inputs.platform == 'Both' }}
     runs-on: windows-2025
     steps:
     - uses: actions/checkout@v7
     - name: Build application
       run: |
-        cmake -B build
+        cmake -G "MinGW Makefiles" -B build -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -DCMAKE_RC_COMPILER=windres
         cmake --build build --config Release
     - name: Zip application and data files together
       run: |
         mkdir "Templum Serpentis"
-        mv build/Release/TemplumSerpentis.exe "Templum Serpentis"
+        mv build/TemplumSerpentis.exe "Templum Serpentis"
+        mv build/lib* "Templum Serpentis"
         mv data "Templum Serpentis"
-    - name: Upload .exe
+    - name: Upload .zip
       uses: actions/upload-artifact@v7
       with:
-        name: "Templum Serpentis.zip"
+        name: "Templum Serpentis-x64.zip"
+        path: "./Templum Serpentis"
+
+  build-windows-x86:
+    name: Windows x86
+    if: ${{ inputs.platform == 'Windows' || inputs.platform == 'Windows-x86' || inputs.platform == 'Both' }}
+    runs-on: windows-2025
+    steps:
+    - uses: actions/checkout@v7
+    - name: Add compiler to PATH
+      run: |
+        echo (Join-Path C: mingw32 bin) >> $env:GITHUB_PATH
+    - name: Build application
+      run: |
+        cmake -G "MinGW Makefiles" -B build -DCMAKE_CXX_COMPILER=i686-w64-mingw32-g++ -DCMAKE_RC_COMPILER=windres
+        cmake --build build --config Release
+    - name: Zip application and data files together
+      run: |
+        mkdir "Templum Serpentis"
+        mv build/TemplumSerpentis.exe "Templum Serpentis"
+        mv build/lib* "Templum Serpentis"
+        mv data "Templum Serpentis"
+    - name: Upload .zip
+      uses: actions/upload-artifact@v7
+      with:
+        name: "Templum Serpentis-x86.zip"
         path: "./Templum Serpentis"
