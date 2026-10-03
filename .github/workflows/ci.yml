@@ -29,7 +29,7 @@ jobs:
     - name: Zip .app
       run: |
         cd build
-        zip -r "../Templum Serpentis.app.zip" "Templum Serpentis.app"
+        zip -r "../Templum Serpentis.zip" "Templum Serpentis.app"
     - name: Upload .zip
       uses: actions/upload-artifact@v7
       with:
