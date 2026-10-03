@@ -104,7 +104,7 @@ if(MINGW AND WIN32)
 			COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${FILE_PATH}" "$<TARGET_FILE_DIR:TemplumSerpentis>"
 			COMMAND_EXPAND_LISTS VERBATIM)
 
-		# Add an install rule for this DLLs, so that it is also included when installing.
+		# Add an install rule for these DLLs, so that they are also included when installing.
 		install(FILES ${FILE_PATH} DESTINATION .)
 	endforeach()
 endif()

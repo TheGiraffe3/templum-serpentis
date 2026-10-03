@@ -52,7 +52,7 @@ jobs:
         mv build/TemplumSerpentis.exe "Templum Serpentis"
         mv build/lib* "Templum Serpentis"
         mv data "Templum Serpentis"
-    - name: Upload .exe
+    - name: Upload .zip
       uses: actions/upload-artifact@v7
       with:
         name: "Templum Serpentis-x64.zip"
@@ -64,7 +64,7 @@ jobs:
     runs-on: windows-2025
     steps:
     - uses: actions/checkout@v7
-    - name: Add MinGW to PATH
+    - name: Add compiler to PATH
       run: |
         echo (Join-Path C: mingw32 bin) >> $env:GITHUB_PATH
     - name: Build application
@@ -77,7 +77,7 @@ jobs:
         mv build/TemplumSerpentis.exe "Templum Serpentis"
         mv build/lib* "Templum Serpentis"
         mv data "Templum Serpentis"
-    - name: Upload .exe
+    - name: Upload .zip
       uses: actions/upload-artifact@v7
       with:
         name: "Templum Serpentis-x86.zip"
