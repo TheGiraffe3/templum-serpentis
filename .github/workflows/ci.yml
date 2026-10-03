@@ -33,7 +33,7 @@ jobs:
     - name: Upload .zip
       uses: actions/upload-artifact@v7
       with:
-        path: "./Templum Serpentis.app.zip"
+        path: "./Templum Serpentis.zip"
         archive: false
 
   build-windows-x64:
