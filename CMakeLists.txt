@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.25)
 project(TemplumSerpentis LANGUAGES CXX)
 
 # Download and build dependencies.
@@ -8,7 +8,6 @@ FetchContent_Declare(SFML
 	GIT_REPOSITORY https://github.com/SFML/SFML.git
 	GIT_TAG 3.0.2
 	GIT_SHALLOW ON
-	EXCLUDE_FROM_ALL
 	SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
@@ -16,7 +15,6 @@ FetchContent_Declare(candle
 	GIT_REPOSITORY https://github.com/TheGiraffe3/Candle.git
 	GIT_TAG include-algorithm
 	GIT_SHALLOW ON
-	EXCLUDE_FROM_ALL
 	SYSTEM)
 set(BUILD_DEMO OFF CACHE BOOL "Disable Candle demo" FORCE)
 set(RADIAL_LIGHT_FIX ON CACHE BOOL "Prevent mutex lock error" FORCE)
@@ -26,7 +24,6 @@ FetchContent_Declare(nfd-e
 	GIT_REPOSITORY https://github.com/btzy/nativefiledialog-extended.git
 	GIT_TAG v1.4.0
 	GIT_SHALLOW ON
-	EXCLUDE_FROM_ALL
 	SYSTEM)
 set(NFD_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(NFD_BUILD_SDL2_TESTS OFF CACHE BOOL "" FORCE)
