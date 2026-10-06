@@ -64,17 +64,17 @@ Alternatively, you can comment out the `music.play();` line in `main.cpp` and bu
 
 I'm interested in feedback about whether menu clicks would be nice. I have a click sound, but I'm not sure if it's something that adds value. Thoughts and opinions appreciated.
 
-Getting the outer edges of the window to look nice and even at all resolutions proved to be a bit difficult. Because of that, the game window's resolution will always be a multiple of 32x32 pixels (if you resize it to a different multiple, it should jump to the next highest multiple of 32x32, although I haven't gotten this to work on Windows). If you would prefer that to not be the case, you can comment out this section in `MenuFunctions.cpp` and rebuild.
+Getting the outer edges of the window to look nice and even at all resolutions proved to be a bit difficult. Because of that, the game window's resolution will always be a multiple of 32x32 pixels (if you resize it to a different multiple, it should jump to the next highest multiple of 32x32, although I haven't gotten this to work on Windows). If you would prefer that to not be the case, you can comment out or remove this section in `MenuFunctions.cpp` and rebuild.
 
 ```cpp
 	int newWindowSizeX = newWindowSize.x;
 	int newWindowSizeY = newWindowSize.y;
 
-	unsigned int windowX = ((newWindowSizeX + 31) / 32) + (((newWindowSizeX + 31) / 32) % 2 == 1);
-	unsigned int windowY = ((newWindowSizeY + 31) / 32) + (((newWindowSizeY + 31) / 32) % 2 == 1);
+	unsigned int windowX = ((newWindowSizeX + 31) / TILESIZE) + (((newWindowSizeX + 31) / TILESIZE) % 2 == 1);
+	unsigned int windowY = ((newWindowSizeY + 31) / TILESIZE) + (((newWindowSizeY + 31) / TILESIZE) % 2 == 1);
 
-	sf::Vector2u ourNewWindowSize = {windowX * 32, windowY * 32};
-	if (newWindowSizeX != windowX * 32 && newWindowSizeY != windowY * 32) {
+	sf::Vector2u ourNewWindowSize = {windowX * TILESIZE, windowY * TILESIZE};
+	if (newWindowSizeX != windowX * TILESIZE && newWindowSizeY != windowY * TILESIZE) {
 		globalData.window.setSize(ourNewWindowSize);
 	}
 ```

@@ -20,6 +20,10 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #include "MenuFunctions.h"
 #include "ResourcePath.hpp"
 
+// set tilesize values
+// any update to this should also change definitions in Game.cpp
+const int TILESIZE = 32;
+
 // local functions
 void handleCenteringText(sf::Text& text, sf::FloatRect& textBounds, int location, int uiPadding, float halfWindowX, float halfWindowY)
 {
@@ -34,11 +38,11 @@ void handleCenteringText(sf::Text& text, sf::FloatRect& textBounds, int location
 int getIdealOffset(sf::RenderWindow& window, bool x)
 {
 	if (x == true) {
-		int xOffset = (32 - window.getSize().x % 32) / 2;
+		int xOffset = (TILESIZE - window.getSize().x % TILESIZE) / 2;
 		return xOffset;
 	}
 
-	int yOffset = (32 - window.getSize().y % 32) / 2;
+	int yOffset = (TILESIZE - window.getSize().y % TILESIZE) / 2;
 	return yOffset;
 }
 
@@ -126,8 +130,8 @@ void GenerateBackgroundSprites(GlobalData& globalData)
 
 	// create a maze for all menus to use
 	// with this, we theoretically have the right maze size on all screen dimensions
-	int necessaryMazeWidth = ((windowSizeX + 31) / 32) + (((windowSizeX + 31) / 32) % 2 == 0);
-	int necessaryMazeHeight = ((windowSizeY + 31) / 32) + (((windowSizeY + 31) / 32) % 2 == 0);
+	int necessaryMazeWidth = ((windowSizeX + 31) / TILESIZE) + (((windowSizeX + 31) / TILESIZE) % 2 == 0);
+	int necessaryMazeHeight = ((windowSizeY + 31) / TILESIZE) + (((windowSizeY + 31) / TILESIZE) % 2 == 0);
 
 	// have our game object create the maze
 	std::pair<std::vector<sf::Sprite>, std::vector<sf::Sprite>> menuBackgroundMaze = globalData.game.generateAndDrawWallsAndGround(necessaryMazeWidth, necessaryMazeHeight);
@@ -144,11 +148,11 @@ void HandleMenuResize(GlobalData& globalData, MenuData& menuData, sf::Vector2f n
 	int newWindowSizeX = newWindowSize.x;
 	int newWindowSizeY = newWindowSize.y;
 
-	unsigned int windowX = ((newWindowSizeX + 31) / 32) + (((newWindowSizeX + 31) / 32) % 2 == 1);
-	unsigned int windowY = ((newWindowSizeY + 31) / 32) + (((newWindowSizeY + 31) / 32) % 2 == 1);
+	unsigned int windowX = ((newWindowSizeX + 31) / TILESIZE) + (((newWindowSizeX + 31) / TILESIZE) % 2 == 1);
+	unsigned int windowY = ((newWindowSizeY + 31) / TILESIZE) + (((newWindowSizeY + 31) / TILESIZE) % 2 == 1);
 
-	sf::Vector2u ourNewWindowSize = {windowX * 32, windowY * 32};
-	if (newWindowSizeX != windowX * 32 && newWindowSizeY != windowY * 32) {
+	sf::Vector2u ourNewWindowSize = {windowX * TILESIZE, windowY * TILESIZE};
+	if (newWindowSizeX != windowX * TILESIZE && newWindowSizeY != windowY * TILESIZE) {
 		globalData.window.setSize(ourNewWindowSize);
 	}
 

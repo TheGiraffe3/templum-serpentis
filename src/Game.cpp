@@ -36,8 +36,8 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 
 // self-explanatory. since all images are 32x32 this shouldn't be changed
 // without a texture pack... hmm...
+// any update to this should also be made in MenuFunctions.cpp
 const float TILESIZE = 32;
-const sf::Vector2f tileSize(TILESIZE, TILESIZE);
 
 void Game::loadWallsAndGroundResources()
 {
@@ -297,27 +297,27 @@ std::pair<std::vector<sf::Sprite>, std::vector<sf::Sprite>> Game::generateSpecia
 		for (int x = 0; x < config.width; x++) {
 			if (config.tiles[x][y] == 3) {
 				sf::Sprite serpent(getResource("serpent-l", 2));
-				serpent.setPosition({x * tileSize.x, y * tileSize.y});
+				serpent.setPosition({x * TILESIZE, y * TILESIZE});
 				serpentSprites.push_back(serpent);
 			} else if (config.specialItems[x][y] == 1) {
 				sf::Sprite machete(getResource("machete", 2));
-				machete.setPosition({x * tileSize.x, y * tileSize.y});
+				machete.setPosition({x * TILESIZE, y * TILESIZE});
 				specialSprites.push_back(machete);
 			} else if (config.specialItems[x][y] == 2) {
 				sf::Sprite flashlight(getResource("flashlight", 2));
-				flashlight.setPosition({x * tileSize.x, y * tileSize.y});
+				flashlight.setPosition({x * TILESIZE, y * TILESIZE});
 				specialSprites.push_back(flashlight);
 			} else if (config.specialItems[x][y] == 3) {
 				sf::Sprite gold(getResource("gold", 2));
-				gold.setPosition({x * tileSize.x, y * tileSize.y});
+				gold.setPosition({x * TILESIZE, y * TILESIZE});
 				specialSprites.push_back(gold);
 			} else if (config.specialItems[x][y] == 4) {
 				sf::Sprite key(getResource("key", 2));
-				key.setPosition({x * tileSize.x, y * tileSize.y});
+				key.setPosition({x * TILESIZE, y * TILESIZE});
 				specialSprites.push_back(key);
 			} else if (config.specialItems[x][y] == 5) {
 				sf::Sprite door(getResource("door", 2));
-				door.setPosition({x * tileSize.x, y * tileSize.y});
+				door.setPosition({x * TILESIZE, y * TILESIZE});
 				specialSprites.push_back(door);
 			}
 		}
@@ -341,9 +341,9 @@ void Game::switchSerpentSprite(sf::Sprite& serpentSprite, int direction)
 void Game::moveSerpent(sf::Sprite& serpentSprite)
 {
 	sf::Vector2f serpentPosition = serpentSprite.getPosition();
-	// divide by 32 to get actual X and Y tile positions
-	int serpentX = serpentPosition.x / tileSize.x;
-	int serpentY = serpentPosition.y / tileSize.y;
+	// divide by TILESIZE to get actual X and Y tile positions
+	int serpentX = serpentPosition.x / TILESIZE;
+	int serpentY = serpentPosition.y / TILESIZE;
 	if (config.playerX == serpentX && config.playerY == serpentY) {
 		// we set this tile to have a serpent in it so that the player doesn't
 		// end a move in the same tile as a serpent without anythign happening
@@ -365,7 +365,7 @@ void Game::moveSerpent(sf::Sprite& serpentSprite)
 			switchSerpentSprite(serpentSprite, 1);
 		}
 	} while (hasWall(serpentX, serpentY));
-	sf::Vector2f newSerpentPosition(serpentX * tileSize.x, serpentY * tileSize.y);
+	sf::Vector2f newSerpentPosition(serpentX * TILESIZE, serpentY * TILESIZE);
 	serpentSprite.setPosition(newSerpentPosition);
 	config.tiles[serpentX][serpentY] = 3;
 	return;
@@ -483,7 +483,7 @@ std::pair<std::vector<sf::Sprite>, std::vector<sf::Sprite>> Game::generateAndDra
 
 				sf::Sprite sprite(getResource(wallTexture, 1));
 
-				sprite.setPosition({x * tileSize.x, y * tileSize.y});
+				sprite.setPosition({x * TILESIZE, y * TILESIZE});
 
 				wallSpritesToReturn.push_back(sprite);
 			} else {
@@ -505,7 +505,7 @@ std::pair<std::vector<sf::Sprite>, std::vector<sf::Sprite>> Game::generateAndDra
 
 				sf::Sprite sprite(getResource(groundTexture, 0));
 
-				sprite.setPosition({x * tileSize.x, y * tileSize.y});
+				sprite.setPosition({x * TILESIZE, y * TILESIZE});
 
 				groundSpritesToReturn.push_back(sprite);
 			}
@@ -557,8 +557,8 @@ int Game::InitializeAndRunGame(GlobalData& globalData, GameCfg::Config& gameConf
 	light.setFade(true);
 	if (config.hasLight == true)   light.setRange(config.LIGHT_ENLARGED_SIZE);
 
-	float fogWidth = config.width * 32;
-	float fogHeight = config.height * 32;
+	float fogWidth = config.width * TILESIZE;
+	float fogHeight = config.height * TILESIZE;
 	// create the lighting area
 	candle::LightingArea fog(candle::LightingArea::FOG,
 							 sf::Vector2f(0.0f, 0.0f),
@@ -583,7 +583,7 @@ int Game::InitializeAndRunGame(GlobalData& globalData, GameCfg::Config& gameConf
 		config.tiles[config.playerX][config.playerY] = 2;
 	}
 	sf::Sprite player(getResource("player-r", 2));
-	player.setPosition({config.playerX * tileSize.x, config.playerY * tileSize.y});
+	player.setPosition({config.playerX * TILESIZE, config.playerY * TILESIZE});
 	// make sure they start with the key / machetes they need
 	updatePlayerSprite(player);
 
@@ -642,21 +642,21 @@ int Game::InitializeAndRunGame(GlobalData& globalData, GameCfg::Config& gameConf
 			if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>()) {
 				sf::Vector2f mousePos = globalData.window.mapPixelToCoords(mousePressed->position, camera);
 
-				int playerX = config.playerX * 32;
-				int playerY = config.playerY * 32;
+				int playerX = config.playerX * TILESIZE;
+				int playerY = config.playerY * TILESIZE;
 				bool greaterThanX = false;
 				bool greaterThanY = false;
 				bool clickedPlayerX = false;
 				bool clickedPlayerY = false;
 
-				if (mousePos.x > playerX + 32) {
+				if (mousePos.x > playerX + TILESIZE) {
 					greaterThanX = true;
 				} else if (mousePos.x < playerX) {
 					// do nothing: just used for checking if they clicked on player tile
 				} else {
 					clickedPlayerX = true;
 				}
-				if (mousePos.y > playerY + 32) {
+				if (mousePos.y > playerY + TILESIZE) {
 					greaterThanY = true;
 				} else if (mousePos.y < playerY) {
 					// do nothing: just used for checking if they clicked on player tile
