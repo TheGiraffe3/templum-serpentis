@@ -43,7 +43,7 @@ void Game::loadWallsAndGroundResources()
 {
 	std::string path = getResourcesPath();
 
-	for (int i = 0; i < 7; i++) {
+	for (int i = 0; i <= 10; i++) {
 		std::string fileName = "ground" + std::to_string(i);
 
 		if (!groundTextures[fileName].loadFromFile(path + "ground/" + fileName + ".png"))
@@ -488,16 +488,20 @@ std::pair<std::vector<sf::Sprite>, std::vector<sf::Sprite>> Game::generateAndDra
 				wallSpritesToReturn.push_back(sprite);
 			} else {
 				// pick a random ground texture
-				const int gN = getRandomNumber(0, 12); // gN == groundNumber, abbreviated
+				const int gN = getRandomNumber(0, 19); // gN == groundNumber, abbreviated
 				std::string groundTexture = "";
 
-				if (gN == 0 || gN == 1)		 groundTexture = "ground0";
+				if (gN == 0 || gN == 1)			groundTexture = "ground0";
 				else if (gN == 2 || gN == 3)	groundTexture = "ground1";
 				else if (gN == 4 || gN == 5)	groundTexture = "ground2";
-				else if (gN == 6)			   groundTexture = "ground3";
-				else if (gN == 7)			   groundTexture = "ground4";
-				else if (gN >= 8 && gN <= 10)   groundTexture = "ground5";
-				else							groundTexture = "ground6";
+				else if (gN == 6)				groundTexture = "ground3";
+				else if (gN == 7)				groundTexture = "ground4";
+				else if (gN >= 8 && gN <= 10)	groundTexture = "ground5";
+				else if (gN >= 11 && gN <= 12)	groundTexture = "ground6";
+				else if (gN == 13)				groundTexture = "ground7";
+				else if (gN >= 14 && gN <= 15)	groundTexture = "ground8";
+				else if (gN >= 16 && gN <= 17)	groundTexture = "ground9";
+				else if (gN >= 18 && gN <= 19)	groundTexture = "ground10";
 
 				sf::Sprite sprite(getResource(groundTexture, 0));
 
