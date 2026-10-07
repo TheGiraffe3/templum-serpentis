@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 		else if(arg == "-v" || arg == "--version")
 		{
 			std::cout << "" << std::endl;
-			std::cout << "Templum Serpentis v0.1.1" << std::endl;
+			std::cout << "Templum Serpentis v0.1.2" << std::endl;
 			std::cout << "https://github.com/TheGiraffe3/templum-serpentis" << std::endl;
 			std::cout << "" << std::endl;
 			return 0;

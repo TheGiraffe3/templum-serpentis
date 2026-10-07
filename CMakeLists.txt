@@ -67,7 +67,7 @@ if(APPLE)
 	# Plagiarized from OttoMatic and modified
 	set_target_properties(TemplumSerpentis PROPERTIES
 		MACOSX_BUNDLE_EXECUTABLE_NAME		"Templum Serpentis"
-		MACOSX_BUNDLE_SHORT_VERSION_STRING	"0.1.0"
+		MACOSX_BUNDLE_SHORT_VERSION_STRING	"0.1.2"
 		MACOSX_BUNDLE_COPYRIGHT				"Created by TheGiraffe3"
 		MACOSX_BUNDLE_BUNDLE_NAME			"Templum Serpentis"
 		MACOSX_BUNDLE_GUI_IDENTIFIER		"com.loymdayddaud.templumserpentis"
