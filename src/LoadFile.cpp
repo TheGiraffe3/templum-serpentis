@@ -65,129 +65,145 @@ void handleV1ConfigSetting(GameCfg::Config& config, int configOptions[5], int fl
 // returns false if there was an error, true if it worked
 bool loadDataFile(std::string filePath, GameCfg::Config& config)
 {
-	int configOptions[6] = {0,0,0,0,0,0};
-	int flashlightOptions[4] = {0,0,0,0};
-	int mazeOptions[6] =   {0,0,0,0,0,0};
-
 	std::ifstream dataFile(filePath);
 
 	if (!dataFile.is_open()) {
-		std::cerr << "Could not open data file!" << std::endl;
+		std::cerr << "Could not open maze file!" << std::endl;
 		return false;
 	}
 
 	// read config options
+	int configVersion = 0;
 	std::string currentLine;
 	getline(dataFile, currentLine);
-	std::vector<std::string> optionsString = splitString(currentLine);
-	if (optionsString.size() != 6) {
-		std::cerr << "Config options string is the wrong size!" << std::endl;
+
+	std::vector<std::string> configVersionVector = splitString(currentLine);
+	if (configVersionVector.size() != 1) {
+		std::cerr << "Expected a config version parameter!" << std::endl;
 		return false;
-	}
-	int currentNumber;
-	for (int i = 0; i < 6; i++) {
-		currentNumber = std::stoi(optionsString[i]);
-		configOptions[i] = currentNumber;
+	} else {
+		configVersion = std::stoi(currentLine);
 	}
 
-	// read flashlight options
-	getline(dataFile, currentLine);
-	optionsString = splitString(currentLine);
-	if (optionsString.size() != 4) {
-		std::cerr << "Flashlight options string is the wrong size!" << std::endl;
-		return false;
-	}
-	for (int i = 0; i < 4; i++) {
-		currentNumber = std::stoi(optionsString[i]);
-		flashlightOptions[i] = currentNumber;
-	}
+	if (configVersion == 1) {
+		int configOptions[6] = {0,0,0,0,0,0};
+		int flashlightOptions[4] = {0,0,0,0};
+		int mazeOptions[6] =   {0,0,0,0,0,0};
 
-	// read maze options
-	getline(dataFile, currentLine);
-	optionsString = splitString(currentLine);
-	if (optionsString.size() != 6) {
-		std::cerr << "Maze options string is the wrong size!" << std::endl;
-		return false;
-	}
-	for (int i = 0; i < 6; i++) {
-		currentNumber = std::stoi(optionsString[i]);
-		mazeOptions[i] = currentNumber;
-	}
-
-	// use V1 just in case we ever have another config version
-	handleV1ConfigSetting(config, configOptions, flashlightOptions, mazeOptions);
-
-	int GOLD_COUNT = 0;
-	int MACHETE_COUNT = 0;
-	int SERPENT_COUNT = 0;
-	bool specifiedKey = false;
-	bool specifiedDoor = false;
-	bool specifiedPlayer = false;
-
-	if (config.customMaze == true) {
-		std::vector<std::string> mazeLines;
-		for (int line = 0; line < config.height; line++) {
-			getline(dataFile, currentLine);
-			mazeLines.push_back(currentLine);
-		}
-		for (int y = 0; y < config.height; y++) {
-			currentLine = mazeLines[y];
-			if (currentLine.size() != config.width) {
-				std::cerr << "Maze definition line " << (y + 4) << " is the wrong width!" << std::endl;
-				if (currentLine.size() > config.width)  return false;
-				std::cerr << "Warning: walls will be used instead of the missing characters." << std::endl;
-				std::cout << std::endl;
-			}
-			char currentCharacter;
-			for (int x = 0; x < config.width; x++) {
-				currentCharacter = currentLine[x];
-				if (currentCharacter == '#') {
-					config.tiles[x][y] = 1;
-				} else if (currentCharacter == '.') {
-					config.tiles[x][y] = 0;
-				} else if (currentCharacter == '&') {
-					config.tiles[x][y] = 0;
-					config.specialItems[x][y] = 3;
-					GOLD_COUNT++;
-				} else if (currentCharacter == 'F') {
-					config.tiles[x][y] = 0;
-					config.specialItems[x][y] = 2;
-				} else if (currentCharacter == 'K') {
-					config.tiles[x][y] = 0;
-					config.specialItems[x][y] = 4;
-					specifiedKey = true;
-				} else if (currentCharacter == 'S') {
-					config.tiles[x][y] = 3;
-					SERPENT_COUNT++;
-				} else if (currentCharacter == 'M') {
-					config.tiles[x][y] = 0;
-					config.specialItems[x][y] = 1;
-					MACHETE_COUNT++;
-				} else if (currentCharacter == 'D') {
-					config.tiles[x][y] = 0;
-					config.specialItems[x][y] = 5;
-					specifiedDoor = true;
-				} else if (currentCharacter == 'P') {
-					config.tiles[x][y] = 2;
-					config.playerX = x;
-					config.playerY = y;
-					specifiedPlayer = true;
-				} else {
-					std::cerr << "Warning: replacing unrecognized character '" << currentCharacter << "' at (" << x + 1 << "," << y + 1 << ") with a wall." << std::endl;
-					config.tiles[x][y] = 1;
-				}
-			}
-		}
-		config.MACHETE_COUNT = MACHETE_COUNT;
-		config.GOLD_COUNT = GOLD_COUNT;
-		config.SERPENT_COUNT = SERPENT_COUNT;
-		config.serpents = SERPENT_COUNT;
-
-		if (!specifiedPlayer || !specifiedDoor || (!specifiedKey && !config.hasKey)) {
-			std::cerr << "Maze neglects to specify one or more of the following: player, door, key" << std::endl;
-			std::cout << "Maze loading failed!" << std::endl;
+		getline(dataFile, currentLine);
+		std::vector<std::string> optionsString = splitString(currentLine);
+		if (optionsString.size() != 6) {
+			std::cerr << "Config options string is the wrong size!" << std::endl;
 			return false;
 		}
+		int currentNumber;
+		for (int i = 0; i < 6; i++) {
+			currentNumber = std::stoi(optionsString[i]);
+			configOptions[i] = currentNumber;
+		}
+
+		// read flashlight options
+		getline(dataFile, currentLine);
+		optionsString = splitString(currentLine);
+		if (optionsString.size() != 4) {
+			std::cerr << "Flashlight options string is the wrong size!" << std::endl;
+			return false;
+		}
+		for (int i = 0; i < 4; i++) {
+			currentNumber = std::stoi(optionsString[i]);
+			flashlightOptions[i] = currentNumber;
+		}
+
+		// read maze options
+		getline(dataFile, currentLine);
+		optionsString = splitString(currentLine);
+		if (optionsString.size() != 6) {
+			std::cerr << "Maze options string is the wrong size!" << std::endl;
+			return false;
+		}
+		for (int i = 0; i < 6; i++) {
+			currentNumber = std::stoi(optionsString[i]);
+			mazeOptions[i] = currentNumber;
+		}
+
+		handleV1ConfigSetting(config, configOptions, flashlightOptions, mazeOptions);
+
+		if (config.customMaze == true) {
+			int GOLD_COUNT = 0;
+			int MACHETE_COUNT = 0;
+			int SERPENT_COUNT = 0;
+			bool specifiedKey = false;
+			bool specifiedDoor = false;
+			bool specifiedPlayer = false;
+
+			std::vector<std::string> mazeLines;
+			for (int line = 0; line < config.height; line++) {
+				getline(dataFile, currentLine);
+				mazeLines.push_back(currentLine);
+			}
+			for (int y = 0; y < config.height; y++) {
+				currentLine = mazeLines[y];
+				if (currentLine.size() != config.width) {
+					std::cerr << "Maze definition line " << (y + 4) << " is the wrong width!" << std::endl;
+					if (currentLine.size() > config.width)  return false;
+					std::cerr << "Warning: walls will be used instead of the missing characters." << std::endl;
+					std::cout << std::endl;
+				}
+				char currentCharacter;
+				for (int x = 0; x < config.width; x++) {
+					currentCharacter = currentLine[x];
+					if (currentCharacter == '#') {
+						config.tiles[x][y] = 1;
+					} else if (currentCharacter == '.') {
+						config.tiles[x][y] = 0;
+					} else if (currentCharacter == '&') {
+						config.tiles[x][y] = 0;
+						config.specialItems[x][y] = 3;
+						GOLD_COUNT++;
+					} else if (currentCharacter == 'F') {
+						config.tiles[x][y] = 0;
+						config.specialItems[x][y] = 2;
+					} else if (currentCharacter == 'K') {
+						config.tiles[x][y] = 0;
+						config.specialItems[x][y] = 4;
+						specifiedKey = true;
+					} else if (currentCharacter == 'S') {
+						config.tiles[x][y] = 3;
+						SERPENT_COUNT++;
+					} else if (currentCharacter == 'M') {
+						config.tiles[x][y] = 0;
+						config.specialItems[x][y] = 1;
+						MACHETE_COUNT++;
+					} else if (currentCharacter == 'D') {
+						config.tiles[x][y] = 0;
+						config.specialItems[x][y] = 5;
+						specifiedDoor = true;
+					} else if (currentCharacter == 'P') {
+						config.tiles[x][y] = 2;
+						config.playerX = x;
+						config.playerY = y;
+						specifiedPlayer = true;
+					} else {
+						std::cerr << "Warning: replacing unrecognized character '" << currentCharacter << "' at (" << x + 1 << "," << y + 1 << ") with a wall." << std::endl;
+						config.tiles[x][y] = 1;
+					}
+				}
+			}
+			config.MACHETE_COUNT = MACHETE_COUNT;
+			config.GOLD_COUNT = GOLD_COUNT;
+			config.SERPENT_COUNT = SERPENT_COUNT;
+			config.serpents = SERPENT_COUNT;
+
+			if (!specifiedPlayer || !specifiedDoor || (!specifiedKey && !config.hasKey)) {
+				std::cerr << "Maze neglects to specify one or more of the following: player, door, key" << std::endl;
+				std::cout << "Maze loading failed!" << std::endl;
+				return false;
+			}
+		}
+	} else {
+		std::cerr << "Unknown config version: " << configVersion << std::endl;
+		std::cerr << "Skipping maze load." << std::endl;
+		return false;
 	}
 
 	dataFile.close();
