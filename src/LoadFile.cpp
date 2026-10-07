@@ -159,7 +159,7 @@ bool loadDataFile(std::string filePath, GameCfg::Config& config)
 				} else if (currentCharacter == 'S') {
 					config.tiles[x][y] = 3;
 					SERPENT_COUNT++;
-				} else if (currentCharacter == 'C') {
+				} else if (currentCharacter == 'M') {
 					config.tiles[x][y] = 0;
 					config.specialItems[x][y] = 1;
 					MACHETE_COUNT++;

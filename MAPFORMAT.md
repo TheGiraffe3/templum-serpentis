@@ -15,7 +15,7 @@ Lines 4-end — if you are providing a maze AND if token 3 of line 3 is 0, defin
 `F` — flashlight  
 `K` — key  
 `S` — serpent  
-`C` — machete  
+`M` — machete  
 `D` — door  
 `P` — player
 
@@ -23,7 +23,7 @@ A custom maze could look something like this.
 ```
 ############
 #....###..D#
-#C#....#&..#
+#M#....#&..#
 #.#..#&###.#
 #.#..#.....#
 #.#..#..S..#
@@ -31,7 +31,7 @@ A custom maze could look something like this.
 #.#.....#..#
 #.#.###..&.#
 #P#.....####
-#.C..S....K#
+#.M..S....K#
 ############
 ```
 
@@ -40,7 +40,7 @@ Or this.
 #######
 #D...&#
 #S#&#S#
-#.C&C.#
+#.M&M.#
 ##&.&##
 #K.P.&#
 #######
