@@ -29,7 +29,7 @@ class Game {
 public:
 	void shutDownGame();
 	std::pair<std::vector<sf::Sprite>, std::vector<sf::Sprite>> generateAndDrawWallsAndGround(int customWidth = 45, int customHeight = 45);
-	int InitializeAndRunGame(GlobalData& globalData, GameCfg::Config& config);
+	int InitializeAndRunGame(GlobalData& globalData, GameCfg::Config& config, bool skipGameStartMenu = false);
 
 private:
 	static constexpr int WIDTH = 45;

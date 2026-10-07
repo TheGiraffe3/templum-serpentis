@@ -128,6 +128,10 @@ int main(int argc, char *argv[])
 			toDoNext = 0;
 			globalData.window.close();
 		}
+		if (toDoNext == 4) {
+			toDoNext = 0;
+			toDoNext = game.InitializeAndRunGame(globalData, config, true);
+		}
 	}
 
 	game.shutDownGame();

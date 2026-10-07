@@ -538,12 +538,14 @@ void Game::reset()
 
 
 // pass in backgroundSprites for the game over menu
-int Game::InitializeAndRunGame(GlobalData& globalData, GameCfg::Config& gameConfig)
+int Game::InitializeAndRunGame(GlobalData& globalData, GameCfg::Config& gameConfig, bool skipGameStartMenu)
 {
-	bool returnImmediately = false;
-	ShowGameStartMenu(globalData, gameConfig, returnImmediately);
-	if (returnImmediately == true)
-		return 0;
+	if (skipGameStartMenu == false) {
+		bool returnImmediately = false;
+		ShowGameStartMenu(globalData, gameConfig, returnImmediately);
+		if (returnImmediately == true)
+			return 0;
+	}
 
 	config = gameConfig;
 
@@ -743,7 +745,7 @@ int Game::InitializeAndRunGame(GlobalData& globalData, GameCfg::Config& gameConf
 					int gamePauseReturn = ShowGamePauseMenu(globalData);
 					if (gamePauseReturn == 1) {
 						reset();
-						return 1;
+						return 4;
 					}
 					if (gamePauseReturn == 0)   returnToMainMenu = false;
 					if (gamePauseReturn == 2)   returnToMainMenu = true;
