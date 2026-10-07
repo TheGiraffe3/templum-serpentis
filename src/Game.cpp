@@ -488,21 +488,21 @@ std::pair<std::vector<sf::Sprite>, std::vector<sf::Sprite>> Game::generateAndDra
 				wallSpritesToReturn.push_back(sprite);
 			} else {
 				// pick a random ground texture
-				const int gN = getRandomNumber(0, 20); // gN == groundNumber, abbreviated
+				const int tex = getRandomNumber(0, 30);
 				std::string groundTexture = "";
 
-				if (gN == 0 || gN == 1)			groundTexture = "ground0";
-				else if (gN == 2 || gN == 3)	groundTexture = "ground1";
-				else if (gN == 4 || gN == 5)	groundTexture = "ground2";
-				else if (gN == 6)				groundTexture = "ground3";
-				else if (gN == 7)				groundTexture = "ground4";
-				else if (gN >= 8 && gN <= 10)	groundTexture = "ground5";
-				else if (gN >= 11 && gN <= 12)	groundTexture = "ground6";
-				else if (gN == 13)				groundTexture = "ground7";
-				else if (gN >= 14 && gN <= 15)	groundTexture = "ground8";
-				else if (gN >= 16 && gN <= 17)	groundTexture = "ground9";
-				else if (gN >= 18 && gN <= 19)	groundTexture = "ground10";
-				else if (gN == 20)				groundTexture = "ground11";
+				if (tex >= 0 && tex <= 4)			groundTexture = "ground0";
+				else if (tex >= 5 && tex <= 9)		groundTexture = "ground1";
+				else if (tex >= 10 && tex <= 12)	groundTexture = "ground2";
+				else if (tex == 13)					groundTexture = "ground3";
+				else if (tex == 14)					groundTexture = "ground4";
+				else if (tex >= 15 && tex <= 17)	groundTexture = "ground5";
+				else if (tex >= 18 && tex <= 20)	groundTexture = "ground6";
+				else if (tex >= 21 && tex <= 22)	groundTexture = "ground7";
+				else if (tex >= 23 && tex <= 24)	groundTexture = "ground8";
+				else if (tex >= 25 && tex <= 26)	groundTexture = "ground9";
+				else if (tex >= 27 && tex <= 28)	groundTexture = "ground10";
+				else if (tex >= 29 && tex <= 30)	groundTexture = "ground11";
 
 				sf::Sprite sprite(getResource(groundTexture, 0));
 
