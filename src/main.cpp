@@ -19,16 +19,74 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #include "Game.h"
 #include "GameConfig.h"
 #include "GlobalData.h"
+#include "LoadFile.h"
 #include "LoadMazeMenu.h"
 #include "MainMenu.h"
 #include "MenuFunctions.h"
 #include "ResourcePath.hpp"
 
-int main()
+void PrintHelp()
+{
+	std::cout << "" << std::endl;
+	std::cout << "List of command line options:" << std::endl;
+	std::cout << "      -h, --help: print this help message." << std::endl;
+	std::cout << "      -m, --map <file>: load a custom map at game startup." << std::endl;
+	std::cout << "      -v, --version: print version." << std::endl;
+	std::cout << "" << std::endl;
+}
+
+int main(int argc, char *argv[])
 {
 	Game game;
 	GameCfg::Config config;
 	GlobalData globalData;
+
+#ifdef _WIN32
+	if(argc > 1)
+		WinConsole::Init();
+#endif
+
+	for(const char *const *it = argv + 1; *it; ++it)
+	{
+		std::string arg = *it;
+		if (arg == "-h" || arg == "--help")
+		{
+			PrintHelp();
+			std::cout << "Use the arrow keys or WASD to move. Press Space to enter the door, if you have the key." << std::endl;
+			std::cout << "You can also use the mouse; simply click in the direction you want to go, or on your tile to go through the door." << std::endl;
+			std::cout << "" << std::endl;
+			std::cout << "Please report any bugs to https://github.com/TheGiraffe3/templum-serpentis." << std::endl;
+			std::cout << "" << std::endl;
+			return 0;
+		}
+		else if (arg == "-m" || arg == "--map")
+		{
+			if (*++it)
+				loadDataFile(*it, config);
+			else
+			{
+				std::cout << "" << std::endl;
+				std::cout << "You must provide a map file to use this config option." << std::endl;
+				std::cout << "" << std::endl;
+				return 1;
+			}
+		}
+		else if(arg == "-v" || arg == "--version")
+		{
+			std::cout << "" << std::endl;
+			std::cout << "Templum Serpentis v0.1.1" << std::endl;
+			std::cout << "https://github.com/TheGiraffe3/templum-serpentis" << std::endl;
+			std::cout << "" << std::endl;
+			return 0;
+		}
+		else if(arg != "")
+		{
+			std::cout << "" << std::endl;
+			std::cout << "Unrecognized argument." << std::endl;
+			PrintHelp();
+			return 1;
+		}
+	}
 
 	globalData.game = game;
 
