@@ -189,13 +189,25 @@ bool loadDataFile(std::string filePath, GameCfg::Config& config)
 					}
 				}
 			}
-			config.MACHETE_COUNT = MACHETE_COUNT;
-			config.GOLD_COUNT = GOLD_COUNT;
-			config.SERPENT_COUNT = SERPENT_COUNT;
-			config.serpents = SERPENT_COUNT;
+			if (config.MACHETE_COUNT != MACHETE_COUNT) {
+				std::cout << "Warning: maze config specifies " << config.MACHETE_COUNT << " machete(s), but " << MACHETE_COUNT << (MACHETE_COUNT == 1 ? " was" : " were") << " placed on the map." << std::endl;
+				config.MACHETE_COUNT = MACHETE_COUNT;
+			}
+			if (config.GOLD_COUNT != GOLD_COUNT) {
+				std::cout << "Warning: maze config specifies " << config.GOLD_COUNT << " gold, but " << GOLD_COUNT << " were placed on the map." << std::endl;
+				config.GOLD_COUNT = GOLD_COUNT;
+			}
+			if (config.SERPENT_COUNT != SERPENT_COUNT) {
+				std::cout << "Warning: maze config specifies " << config.SERPENT_COUNT << " serpent(s), but " << SERPENT_COUNT << (SERPENT_COUNT == 1 ? " was" : " were") << " placed on the map." << std::endl;
+				config.SERPENT_COUNT = SERPENT_COUNT;
+			}
+			if (config.serpents != SERPENT_COUNT) {
+				std::cout << "Warning: maze config specifies " << config.serpents << " serpent(s), but " << SERPENT_COUNT << (SERPENT_COUNT == 1 ? " was" : " were") << " placed on the map." << std::endl;
+				config.serpents = SERPENT_COUNT;
+			}
 
 			if (!specifiedPlayer || !specifiedDoor || (!specifiedKey && !config.hasKey)) {
-				std::cerr << "Maze neglects to specify one or more of the following: player, door, key" << std::endl;
+				std::cerr << "Maze does not specify one or more of the following: player, door, key" << std::endl;
 				std::cout << "Maze loading failed!" << std::endl;
 				return false;
 			}
