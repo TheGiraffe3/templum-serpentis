@@ -41,11 +41,6 @@ int main(int argc, char *argv[])
 	GameCfg::Config config;
 	GlobalData globalData;
 
-#ifdef _WIN32
-	if(argc > 1)
-		WinConsole::Init();
-#endif
-
 	for(const char *const *it = argv + 1; *it; ++it)
 	{
 		std::string arg = *it;
