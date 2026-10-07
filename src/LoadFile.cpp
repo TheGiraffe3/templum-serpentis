@@ -173,6 +173,7 @@ bool loadDataFile(std::string filePath, GameCfg::Config& config)
 					config.playerY = y;
 					specifiedPlayer = true;
 				} else {
+					std::cerr << "Warning: replacing unrecognized character '" << currentCharacter << "' at (" << x + 1 << "," << y + 1 << ") with a wall." << std::endl;
 					config.tiles[x][y] = 1;
 				}
 			}
